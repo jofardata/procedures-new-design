@@ -7,7 +7,7 @@ const routes: Routes = [
 
 	// enable this router to set which demo theme to load,
 	// leave the path value empty to enter into nested router in ThemeModule
-	{path: '', loadChildren: 'app/views/themes/demo2/theme.module#ThemeModule'},
+	// {path: '', loadChildren: 'app/views/themes/demo2/theme.module#ThemeModule'},
 
 	/** START: remove this themes list on production */
 	{path: '', redirectTo: 'demo1', pathMatch: 'full'},
