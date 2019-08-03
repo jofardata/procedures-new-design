@@ -1,0 +1,65 @@
+
+  <div class="container-fluid">
+    <div style="background-color: white" class="row  text-center" style=" margin-left: 10px">
+      <div class="col-md-3">
+          <input class="roundInput"  #box matInput matInput (keyup)="applyFilter($event.target.value)" style="margin-bottom: 10px; " type="text" placeholder="Trier" class="form-control"> 
+      </div>
+    <div class="col-md-3" >
+        <mat-form-field color="primary">
+            <input [max]="maxDate" (dateInput)="onDate1($event)" matInput [matDatepicker]="picker" placeholder="Choisissez une date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+    </div>
+    <div class="col-md-3" >
+        <mat-form-field color="primary">
+            <input [min]="minDate" [disabled]="!date1"  (dateInput)="onDate2($event)" matInput [matDatepicker]="picker2" placeholder="Jusqu'au">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+      </div>
+      <div style="margin-left: 2px; margin-top:10px" class="col-md-2">
+        <button (click)="regenerer()" mat-raised-button color="primary" matTooltip="Generer un fichier excel">Generer un fichier excel</button>
+      </div>
+    </div>
+    <img style="float: right" (click)="onRefresh()" style="margin-left:100px" width="30px" height="30px" src="../../assets/refresh.png" alt="">
+        <div class="mat-elevation-z8">
+          <mat-table [dataSource]="dataSource" matSort >
+             <ng-container matColumnDef="createdOn">
+                  <mat-header-cell class="t-head" *matHeaderCellDef mat-sort-header  > Date</mat-header-cell>
+                  <mat-cell *matCellDef="let element" ><span >{{element.createdOn|date:'dd/MM/yyyy HH:mm:ss'}}</span></mat-cell>
+              </ng-container> 
+                <ng-container matColumnDef="passengerName">
+                    <mat-header-cell class="t-head" *matHeaderCellDef mat-sort-header >Nom du passager</mat-header-cell>
+                    <mat-cell  *matCellDef="let element">{{element.passengerName}}</mat-cell>
+                </ng-container> 
+                <ng-container matColumnDef="flightCompany">
+                    <mat-header-cell class="t-head" *matHeaderCellDef mat-sort-header > Compagnie Aerien </mat-header-cell>
+                    <mat-cell  *matCellDef="let element">{{element.flightCompany}}</mat-cell>
+                </ng-container>     
+               <ng-container matColumnDef="destination">
+                  <mat-header-cell class="t-head" *matHeaderCellDef mat-sort-header>destination </mat-header-cell>
+                  <mat-cell  *matCellDef="let element">{{element.destination}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="amount">
+                  <mat-header-cell class="t-head" *matHeaderCellDef mat-sort-header>Montant</mat-header-cell>
+                  <mat-cell  *matCellDef="let element">{{element.amount}}</mat-cell>
+               </ng-container>  
+               <ng-container matColumnDef="currency">
+                <mat-header-cell class="t-head" *matHeaderCellDef mat-sort-header>Devise</mat-header-cell>
+                <mat-cell  *matCellDef="let element">{{element.currency}}</mat-cell>
+             </ng-container>          
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+       </mat-table>
+          <mat-paginator
+          (page)="onPageChanged($event)"
+            showFirstLastButtons
+            [(length)]="totalElements"
+                        [pageSize]="5"
+                        [pageSizeOptions]="[25,50, 100,200,500,1000,5000,10000]">
+          </mat-paginator>
+     </div>
+     <br/>
+    
+

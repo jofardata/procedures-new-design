@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4 rechercher">
+      <div>
+      <P>RECHERCHE DE LA PERSONNE</P>
+        <form  [formGroup]="myForm" (ngSubmit)="postRecherche(myForm)" class="md-form mr-auto mb-4"> 
+            <input class="form-control mr-sm-2" type="text" formControlName="bdnId" placeholder="rechercher" aria-label="Search"><br/> -->
+            <button class="btn btn-info btn-block my-4" type="submit">Rechercher</button>
+        </form><br/>
+        </div>
+        <div *ngIf="responseCode ==='00'; else nodata" class="tableActivityAgent">
+          <P >Liste de la Personne trouver</P>
+              Nom : {{middleName}} <br/>
+              Prenom: {{lastName}} <br/>
+              Genre:{{gender}} <br/>
+              Tel:{{phone}}
+        </div>
+        <ng-template #nodata>Pas de resultat</ng-template>
+    </div>
+      <div class="col-sm-5 mx-auto">
+            <div class="corp">
+                <form [formGroup]="myForm" (ngSubmit)="post(myForm)">
+                                    
+                    <label for="id">Bdp Id</label>
+                    <input type="text" id="id" formControlName="bdnId" placeholder="Entrer un id" value="{{bdnId}}" class="form-control" disabled/>
+                    
+                    <label for="id">Nom de l'Agent</label>
+                    <input type="text" id="agentName" formControlName="agentName" placeholder="" value="{{middleName}}  {{lastName}}" class="form-control" disabled/>
+    
+                    <label for="sector">Secteur</label>
+                    <select (change)="onSectorChange($event.target.value)" id="sector" formControlName="sector" class="form-control">
+                      <option *ngFor="let sect of sectors" value="{{sect.id}}:{{sect.name}}">{{sect.name}}</option>   
+                    </select>
+                    
+                    <label for="sectorId">Id du Secteur</label>
+                    <input type="text" id="sectorId" formControlName="sectorId" value="{{sectorId}}" class="form-control" disabled/>
+    
+                    <label for="sectorName">Nom du Secteur</label>
+                    <input type="text" id="sectorName" formControlName="sectorName" value="{{sector.split(':')[1]}}" class="form-control" disabled/>
+                    
+    
+                    <label for="entity">Entité Fiscale</label>
+                    <select (change)="onEntityChange($event.target.value)" id="entity" formControlName="entity" class="form-control">
+                      <option *ngFor="let ent of entities" value="{{ent.id}}:{{ent.name}}">{{ent.name}}</option>   
+                    </select>
+    
+                    <label for="entityId">Id de l'Entité</label>
+                    <input type="text" id="entityId" formControlName="entityId" value="{{entity}}" class="form-control" disabled/>
+                    
+                    <label for="entityName">Nom de l'Entité</label>
+                  
+                    <label for="roleId">Rôle</label>
+                    <select id="roleId" formControlName="roleId"  class="form-control">
+                         <option *ngFor="let listRole of listRole" value="{{listRole.id}}">{{listRole.role}}</option>   
+                    </select>
+    
+                    <label for="phone">Numero téléphone</label>
+                    <input type="text" value="{{phone}}" formControlName="telephone" class="form-control" placeholder="Entrer votre numéro téléphone"/>
+                        <br/>
+    
+                    
+                    <input type="hidden" formControlName="createdBy" value="{{name}}"/>
+    
+                    
+                    <input type="submit"  [disabled]="myForm.invalid" value="Enregister" class="btn btn-success btn-block"/>
+                </form>
+          </div>
+        </div>
+        <div class="col-sm-3"><p>  </p></div>
+  </div>
+</div>

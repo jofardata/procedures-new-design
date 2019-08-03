@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-3 recherche">
+          <div class="col-sm-12">
+                 <div>
+                    <!-- Role =>  {{role}} -->
+                 </div> 
+               <form [formGroup]="myForm" (ngSubmit)="postSearch(myForm)">
+                   <label for="recherche">Faite une recherche par BdnId</label>
+                   <input type="text" id="recherche" formControlName="bdnId" placeholder="Faite votre recherche" class="form-control"/><br/>
+                      <input type="submit"  value="Rechercher" class="btn btn-success btn-block"/>
+              </form>
+          </div><br/>
+          <div class="col-sm-12">
+              <div *ngIf="responseCode==='00'; else nodata">                    
+                  PostNom : {{middleName}} <br/>
+                  Prenom : {{lastName}} <br/>
+                  Telephone : {{phone}} <br/>
+                  Créé par : {{name}} <br/>
+              </div>
+              <ng-template #nodata>Aucune donnée trouvée</ng-template>
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <form [formGroup]="myForm" (ngSubmit)="post(myForm)">
+              <!-- BDNID -->                
+              <label for="id">Bdn Id</label>
+              <input type="text" id="id" formControlName="bdnId" placeholder="Entrer un id" value="{{bdnId}}" class="form-control"/>
+              
+              <!-- AGENT NAME -->
+              <label for="id">Nom de l'Agent</label>
+              <input type="text" id="agentName" formControlName="agentName" placeholder="Entrer un id" value="{{middleName}} {{lastName}}" class="form-control"/>
+             
+              <!-- SECTEUR -->
+              <label for="sector">Secteur</label>
+                <select (change)="onSectorChange($event.target.value)" id="sector" formControlName="sector" class="form-control">
+                  <option *ngFor="let sect of sectors" value="{{sect.id}}:{{sect.name}}">{{sect.name}}</option>   
+                </select>
+                
+                <label for="sectorId">Id du Secteur</label>
+                <input type="text" id="sectorId" formControlName="sectorId" value="{{sectorId}}" class="form-control" disabled/>
+
+                <label for="sectorName">Nom du Secteur</label>
+                <input type="text" id="sectorName" formControlName="sectorName" value="{{sectorName}}" class="form-control" disabled/>
+
+              <!-- Entity -->
+
+              <label for="entity">Entité Fiscale</label>
+                <select (change)="onEntityChange($event.target.value)" id="entity" formControlName="entity" class="form-control">
+                  <option *ngFor="let ent of fiscalEntity" value="{{ent.id}}:{{ent.name}}">{{ent.name}}</option>   
+                </select>
+
+                <label for="entityId">Id de l'Entité</label>
+                <input type="text" id="entityId" formControlName="entityId" value="{{entityId}}" class="form-control" disabled/>
+                
+                <label for="entityName">Nom de l'Entité</label>
+                <input type="text" id="entityName" formControlName="entityName" value="{{entityName}}" class="form-control" disabled/>
+              
+              <!-- ROLE -->
+              <label for="roleId">Rôle</label>
+              <select id="roleId" formControlName="roleId"  class="form-control">
+                   <option *ngFor="let listRole of Roles" value="{{listRole.id}}">{{listRole.role}}</option>   
+              </select>
+              
+
+              <!-- TELEPHONE -->
+              <label for="phone">Numero téléphone</label>
+              <input type="text" value="{{phone}}" formControlName="telephone" class="form-control" placeholder="Entrer votre numéro téléphone"/>
+                  <br/>
+
+              <!-- CREATED BY -->
+              <input type="hidden" formControlName="createdBy" value="{{name}}"/>
+              
+              <!-- SUBMIT -->
+              <input type="submit"  value="Creer" class="btn btn-primary btn-block"/>
+          </form>
+      </div>
+  </div>
+</div>
